@@ -1,0 +1,5 @@
+[namenode]
+master1
+
+[datanode]
+master1

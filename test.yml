@@ -1,0 +1,11 @@
+---
+- name: Hadoop Cluster Setup
+  hosts: all
+  tasks:
+  - name: Fetch Java version
+    shell: java -version 2>&1 | grep version | awk '{print $3}' | sed 's/"//g'
+    register: java_version
+  - name: Failed when Java version wrong
+    fail:
+      msg: "The system requried Java Version 1.6 or 1.7, but the system using version {{ java_version.stdout }}"
+    when:  java_version.stdout | version_compare('1.8', '>=') or java_version.stdout | version_compare('1.6', '<')

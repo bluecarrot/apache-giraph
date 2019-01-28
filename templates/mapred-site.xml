@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+{% for map in mapred_setting %}
+  <property>
+    <name>{{ map.key }}</name>
+    <value>{{ map.value }}</value>
+  </property>
+{% endfor %}
+</configuration>

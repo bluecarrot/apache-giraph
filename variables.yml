@@ -1,0 +1,29 @@
+---
+# Environment Variales
+data_loc: "/data/"
+hadoop_home: "~/hadoop-0.20.203.0"
+java_home: "/etc/alternatives/java_sdk"
+
+# Hadoop setup
+hadoop_host_count: "{{ ansible_play_hosts | length }}"
+hadoop_master: master1
+hadoop_master_port: {
+  dfs: 54310,
+#  dfs_web: 54309,
+  mapred_tracker: 54311
+#  yarn_scheduler: 8030,
+#  yarn_track: 8031,
+#  yarn: 8032,
+#  yarn_admin: 8033,
+#  yarn_web: 8089
+}
+hadoop_dfs_replication: 3
+core_setting:
+  - { key: "hadoop.tmp.dir", value: "/data/{{ ansible_user_id }}/giraph/tmp" }
+  - { key: "fs.default.name", value: "hdfs://{{ hadoop_master }}:{{ hadoop_master_port.dfs }}" }
+hdfs_setting:
+  - { key: "dfs.replication", value: 1 }
+mapred_setting:
+  - { key: "mapred.job.tracker", value: "{{ hadoop_master }}:{{ hadoop_master_port.mapred_tracker }}" }
+  - { key: "mapred.tasktracker.map.tasks.maximum", value: 4 }
+  - { key: "mapred.map.tasks", value: 4 }
